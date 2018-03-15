@@ -1,0 +1,17 @@
+.altbox{
+    background-color: gray;
+}
+
+.imageBox{
+
+  
+    padding:1px;
+}
+.stripper{
+    padding:0px !important;
+}
+
+.gallerywrapper{
+    padding:0px;
+    margin-top:10px;
+}
