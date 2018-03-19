@@ -4,6 +4,7 @@ import './ui.body.css';
 import Gallery from 'react-grid-gallery';
 import  Map from './maps/maps';
 import Weather from './weather/weather';
+import LocationSearchInput from "./search/ui.search"
 
 
 
@@ -13,6 +14,7 @@ class AppBody extends React.Component{
         this.state = {
             images:[],
             markers:[],
+            weather:'',
             tags:'',
             searchText: '',
             center:{lat:53.201, lng:2.3562},
@@ -26,8 +28,6 @@ class AppBody extends React.Component{
             padding: '0px'
         }
 
-     
-
         this.containerStyle={
             paddingLeft:  '50px',
             paddingRight:  '50px'
@@ -39,6 +39,7 @@ class AppBody extends React.Component{
         .then(response => {
                 this.setState({images: response.data.gallery});
                 this.setState({markers:response.data.mapMarkers});
+                this.setState({weather:response.data.weather});
                 this.setState({center:response.data.mapMarkers[0]});
         })
       
@@ -63,10 +64,7 @@ class AppBody extends React.Component{
             <div className="body">
                <div className="container-fluid" style={this.containerStyle}>
                    <div className="row">
-                        <div className="form-group">
-                            <input type="text" className="form-control textSearchLarge" placeholder="Enter a place." value={this.state.searchText}  onChange={evt => this.updateInputValue(evt)}      />
-                            <button type="submit" className="btn btn-default" onClick={this.handleClick}>Click Me </button>
-                        </div>
+                       <LocationSearchInput />
                     </div>
                     <div className="row" style={this.divMapStyle} >
                     
@@ -77,11 +75,6 @@ class AppBody extends React.Component{
                                 defaultCenter={{lat:40.728,lng: -73.989}}
                                 containerElement={<div style={{height:100+'%'}}/>}
                                 mapElement={<div style={{height:100+'%'}}/>} />
-               
-                            
-
-                        
-                        
                      
                    </div>  
                     <div className="row">   
@@ -89,7 +82,8 @@ class AppBody extends React.Component{
                             <Gallery images={this.state.images}/>  
                         </div>
                         <div className="col-md-4">
-                            <Weather />
+                            <Weather weatherData = {this.state.weather}/>
+                           
                         </div>
                     </div>  
                 </div>
